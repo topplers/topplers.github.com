@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Viva La Vida!]]></title>
-  <link href="http://topplers.github.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: PHP&nbspDevelopment | Viva La Vida!]]></title>
+  <link href="http://topplers.github.com/blog/categories/php-nbspdevelopment/atom.xml" rel="self"/>
   <link href="http://topplers.github.com/"/>
   <updated>2012-11-20T23:57:13+01:00</updated>
   <id>http://topplers.github.com/</id>
@@ -140,28 +140,6 @@ require('View.php');
 <p>IV:</p>
 
 <p>通过上面这个实例,大家想必应该对MVC有所了解了,简单得说就是三个模块,各有其用,各尽其责,但又相互联系,相互影响。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Using the Octopress]]></title>
-    <link href="http://topplers.github.com/blog/2012/11/17/using-the-octopress/"/>
-    <updated>2012-11-17T20:17:00+01:00</updated>
-    <id>http://topplers.github.com/blog/2012/11/17/using-the-octopress</id>
-    <content type="html"><![CDATA[<p>最终还是弃用了wordpress,果断使用Octopress,</p>
-
-<p>折腾了一上午,终于在<a href="https://help.github.com/articles/generating-ssh-keys">这篇文章</a>的帮助下,解决了<em>ssh-key</em>的问题.</p>
-
-<p>Octopress还蛮高端的样子,Markdown写Article。</p>
-
-<p>但不像Subtitle说的:A blogging framework for hackers,用它的大部分都是程序员吧.</p>
-
-<p>Anyway,现在正式开始启用Octopress,记录生活和一些技术文章.</p>
-
-<p>照惯例来个:
-<code>
-Hello World!
-</code></p>
 ]]></content>
   </entry>
   
