@@ -4,7 +4,7 @@
   <title><![CDATA[Category: PHP&nbspDevelopment | Viva La Vida!]]></title>
   <link href="http://topplers.github.com/blog/categories/php-nbspdevelopment/atom.xml" rel="self"/>
   <link href="http://topplers.github.com/"/>
-  <updated>2012-11-21T00:16:32+01:00</updated>
+  <updated>2012-11-21T00:24:28+01:00</updated>
   <id>http://topplers.github.com/</id>
   <author>
     <name><![CDATA[Desperado]]></name>
@@ -76,8 +76,9 @@ mysql_close($cn);
 </pre>
 
 
-<p>这段代码如果我们按MVC的方式来写:
-Model.php:</p>
+<p>这段代码如果我们按MVC的方式来写:</p>
+
+<p>Model.php:</p>
 
 <pre>
 <code>
