@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Viva La Vida!]]></title>
-  <link href="http://topplers.github.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Code&&nbspAudit | Viva La Vida!]]></title>
+  <link href="http://topplers.github.com/blog/categories/code-nbspaudit/atom.xml" rel="self"/>
   <link href="http://topplers.github.com/"/>
   <updated>2012-11-22T13:45:23+01:00</updated>
   <id>http://topplers.github.com/</id>
@@ -94,7 +94,7 @@
 
 <h2>EXP:提交用户注册的时候,伪造一个client_ip,内容如下:</h2>
 
-<p>sb&#8217;,&#8217;1&#8217;,&#8217;6&#8217;),(&#8216;hell&#8217;,&#8217;1b192f49ddec03d0c7e777d3e578cebf&#8217;,(select username from fn_user where userid=1),&#8217;1&#8217;,&#8217;11111&#8217;,&#8217;sbd&#8217;,&#8217;1&#8217;,&#8217;6&#8217;)#
+<p>sb','1','6'),('hell','1b192f49ddec03d0c7e777d3e578cebf',(select username from fn_user where userid=1),'1','11111','sbd','1','6')#
 成功之后,登陆用户:hell,密码:sbdan. 邮箱处就有管理员的user了.</p>
 
 <h1>修补建议:</h1>
@@ -120,159 +120,6 @@ function get_user_ip(){
 </code>
 </pre>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[小谈PHP之MVC框架]]></title>
-    <link href="http://topplers.github.com/blog/2012/11/20/xiao-tan-php-mvckuang-jia/"/>
-    <updated>2012-11-20T22:13:00+01:00</updated>
-    <id>http://topplers.github.com/blog/2012/11/20/xiao-tan-php-mvckuang-jia</id>
-    <content type="html"><![CDATA[<p>I:</p>
-
-<p>什么是MVC?
-MVC (Model View Controller)本来是存在于Desktop程序中的，M是指数据模型，V是指用户界面，C则是控制器。使用MVC的目的是将M和V实现代码分离，从而使同一个程序可以使用不同的表现形式。比如一批统计数据你可以分别用柱状图、饼图来表示。C存在的目的则是确保M和V的同步，一旦M改变，V应该同步更新。</p>
-
-<p>II：</p>
-
-<p>上面的概念可能比较抽象,难以了解,我来简单的讲下:</p>
-
-<p>顾名思义,<em>MVC</em>是由三个模块组成的的:</p>
-
-<ul>
-<li>M：主要与程序的数据交互,回应数据的请求.</li>
-<li>V: 程序的外观</li>
-<li>C: 控制整个网站的运行,负责用户的请求,选择展示相应的外观</li>
-</ul>
-
-
-<p><img src="http://farm4.static.flickr.com/3164/3284983140_d803e80c7c_o.gif" alt="Alt text" /></p>
-
-<p>III:</p>
-
-<p>下面我用下一段代码,让大家详细了解下MVC框架</p>
-
-<pre>
-<code>
-&lt;?php
-$cn = mysql_connect('local','user','pass');
-mysql_select_db('db', $cn);
-
-$r=mysql_query('SELECT *FROM article', $cn);
-?&gt;
-
-&lt;h1&gt;Article&lt;/h1&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;date&lt;/td&gt;
-    &lt;td&gt;title&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-
-&lt;?php
-
-while($result= mysql_fetch_array($r, MYSQL_ASSOC))
-{
-    echo "&lt;tr&gt;";
-    echo "&lt;td&gt; ".$result['date']." &lt;/td&gt;";
-    echo "&lt;td&gt; ".$result['title']." &lt;/td&gt;";
-    echo "&lt;/tr&gt;";
-}
-&lt;/table&gt;
-&lt;?php
-mysql_close($cn);
-?&gt;
-</code>
-</pre>
-
-
-<p>这段代码如果我们按MVC的方式来写:</p>
-
-<p>Model.php:</p>
-
-<pre>
-<code>
-
-function getArticle()
-{
-    $cn = mysql_connect('localhost', 'user', 'pass');
-    mysql_select_db('db', $cn);
-
-    $result = mysql_query('SELECT * from article', $cn);
-    $article = array();
-
-    while($article = mysql_fetch_assoc($result))
-    {
-        $articles[] = $article;
-    }
-
-    mysql_close();    
-
-    return $article;
-}
-</code>
-</pre>
-
-
-<p>Control.php:</p>
-
-<pre>
-<code>
-require('Model.php');
-
-$articles = getArticle();
-
-require('View.php');
-</code>
-</pre>
-
-
-<p>View.php:</p>
-
-<pre>
-<code>
-&lt;h1&gt;Article&lt;h1&gt;
-&lt;table&gt; 
-&lt;tr&gt; 
-    &lt;td&gt;Date&lt;/td&gt; 
-    &lt;td&gt;title&lt;/td&gt;
-&lt;/tr&gt; 
-&lt;?php foreach($articles as $article): ?&gt; 
-&lt;tr&gt;
-&lt;td&gt;&lt;?php echo $article['date']?&gt;&lt;/td&gt; 
-&lt;td&gt;&lt;?php echo $article['title']?&gt;&lt;/td&gt;
-&lt;/tr&gt; 
-&lt;?php endforeach;?&gt;
-&lt;/table&gt;
-</code>
-</pre>
-
-
-<p>IV:</p>
-
-<p>通过上面这个实例,大家想必应该对MVC有所了解了,简单得说就是三个模块,各有其用,各尽其责,但又相互联系,相互影响。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Using the Octopress]]></title>
-    <link href="http://topplers.github.com/blog/2012/11/17/using-the-octopress/"/>
-    <updated>2012-11-17T20:17:00+01:00</updated>
-    <id>http://topplers.github.com/blog/2012/11/17/using-the-octopress</id>
-    <content type="html"><![CDATA[<p>最终还是弃用了wordpress,果断使用Octopress,</p>
-
-<p>折腾了一上午,终于在<a href="https://help.github.com/articles/generating-ssh-keys">这篇文章</a>的帮助下,解决了<em>ssh-key</em>的问题.</p>
-
-<p>Octopress还蛮高端的样子,Markdown写Article。</p>
-
-<p>但不像Subtitle说的:A blogging framework for hackers,用它的大部分都是程序员吧.</p>
-
-<p>Anyway,现在正式开始启用Octopress,记录生活和一些技术文章.</p>
-
-<p>照惯例来个:
-<code>
-Hello World!
-</code></p>
 ]]></content>
   </entry>
   

@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Viva La Vida!</title>
+  <title>FineCms 1.7.2 注射漏洞 - Viva La Vida!</title>
   <meta name="author" content="Desperado">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://topplers.github.com/">
+  <link rel="canonical" href="http://topplers.github.com/blog/2012/11/22/finecms-17-dot-2-zhu-she-lou-dong/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -62,15 +62,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/11/22/finecms-17-dot-2-zhu-she-lou-dong/">FineCms 1.7.2 注射漏洞</a></h1>
+      <h1 class="entry-title">FineCms 1.7.2 注射漏洞</h1>
     
     
       <p class="meta">
@@ -88,14 +85,14 @@
 
 <time datetime="2012-11-22T13:12:00+01:00" pubdate data-updated="true">Nov 22<span>nd</span>, 2012</time>
         
-         | <a href="/blog/2012/11/22/finecms-17-dot-2-zhu-she-lou-dong/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h1>简介:</h1>
+<div class="entry-content"><h1>简介:</h1>
 
 <h2>FineCMS是一款基于PHP+MySql开发的内容管理系统,采用MVC设计模式，实现业务逻辑与表现层的适当分离，使网页设计师能够轻松设计出理想的模板。</h2>
 
@@ -198,182 +195,16 @@ function get_user_ip(){
 </pre>
 
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/20/xiao-tan-php-mvckuang-jia/">小谈PHP之MVC框架</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Desperado</span></span>
 
-<time datetime="2012-11-20T22:13:00+01:00" pubdate data-updated="true">Nov 20<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/11/20/xiao-tan-php-mvckuang-jia/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I:</p>
-
-<p>什么是MVC?
-MVC (Model View Controller)本来是存在于Desktop程序中的，M是指数据模型，V是指用户界面，C则是控制器。使用MVC的目的是将M和V实现代码分离，从而使同一个程序可以使用不同的表现形式。比如一批统计数据你可以分别用柱状图、饼图来表示。C存在的目的则是确保M和V的同步，一旦M改变，V应该同步更新。</p>
-
-<p>II：</p>
-
-<p>上面的概念可能比较抽象,难以了解,我来简单的讲下:</p>
-
-<p>顾名思义,<em>MVC</em>是由三个模块组成的的:</p>
-
-<ul>
-<li>M：主要与程序的数据交互,回应数据的请求.</li>
-<li>V: 程序的外观</li>
-<li>C: 控制整个网站的运行,负责用户的请求,选择展示相应的外观</li>
-</ul>
-
-
-<p><img src="http://farm4.static.flickr.com/3164/3284983140_d803e80c7c_o.gif" alt="Alt text" /></p>
-
-<p>III:</p>
-
-<p>下面我用下一段代码,让大家详细了解下MVC框架</p>
-
-<pre>
-<code>
-&lt;?php
-$cn = mysql_connect('local','user','pass');
-mysql_select_db('db', $cn);
-
-$r=mysql_query('SELECT *FROM article', $cn);
-?&gt;
-
-&lt;h1&gt;Article&lt;/h1&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;td&gt;date&lt;/td&gt;
-    &lt;td&gt;title&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-
-&lt;?php
-
-while($result= mysql_fetch_array($r, MYSQL_ASSOC))
-{
-    echo "&lt;tr&gt;";
-    echo "&lt;td&gt; ".$result['date']." &lt;/td&gt;";
-    echo "&lt;td&gt; ".$result['title']." &lt;/td&gt;";
-    echo "&lt;/tr&gt;";
-}
-&lt;/table&gt;
-&lt;?php
-mysql_close($cn);
-?&gt;
-</code>
-</pre>
-
-
-<p>这段代码如果我们按MVC的方式来写:</p>
-
-<p>Model.php:</p>
-
-<pre>
-<code>
-
-function getArticle()
-{
-    $cn = mysql_connect('localhost', 'user', 'pass');
-    mysql_select_db('db', $cn);
-
-    $result = mysql_query('SELECT * from article', $cn);
-    $article = array();
-
-    while($article = mysql_fetch_assoc($result))
-    {
-        $articles[] = $article;
-    }
-
-    mysql_close();    
-
-    return $article;
-}
-</code>
-</pre>
-
-
-<p>Control.php:</p>
-
-<pre>
-<code>
-require('Model.php');
-
-$articles = getArticle();
-
-require('View.php');
-</code>
-</pre>
-
-
-<p>View.php:</p>
-
-<pre>
-<code>
-&lt;h1&gt;Article&lt;h1&gt;
-&lt;table&gt; 
-&lt;tr&gt; 
-    &lt;td&gt;Date&lt;/td&gt; 
-    &lt;td&gt;title&lt;/td&gt;
-&lt;/tr&gt; 
-&lt;?php foreach($articles as $article): ?&gt; 
-&lt;tr&gt;
-&lt;td&gt;&lt;?php echo $article['date']?&gt;&lt;/td&gt; 
-&lt;td&gt;&lt;?php echo $article['title']?&gt;&lt;/td&gt;
-&lt;/tr&gt; 
-&lt;?php endforeach;?&gt;
-&lt;/table&gt;
-</code>
-</pre>
-
-
-<p>IV:</p>
-
-<p>通过上面这个实例,大家想必应该对MVC有所了解了,简单得说就是三个模块,各有其用,各尽其责,但又相互联系,相互影响。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/17/using-the-octopress/">Using the Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -385,42 +216,44 @@ require('View.php');
   
 
 
-<time datetime="2012-11-17T20:17:00+01:00" pubdate data-updated="true">Nov 17<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/11/17/using-the-octopress/#disqus_thread">Comments</a>
-        
-      </p>
+<time datetime="2012-11-22T13:12:00+01:00" pubdate data-updated="true">Nov 22<span>nd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/code-nbspaudit/'>Code&&nbspAudit</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>最终还是弃用了wordpress,果断使用Octopress,</p>
-
-<p>折腾了一上午,终于在<a href="https://help.github.com/articles/generating-ssh-keys">这篇文章</a>的帮助下,解决了<em>ssh-key</em>的问题.</p>
-
-<p>Octopress还蛮高端的样子,Markdown写Article。</p>
-
-<p>但不像Subtitle说的:A blogging framework for hackers,用它的大部分都是程序员吧.</p>
-
-<p>Anyway,现在正式开始启用Octopress,记录生活和一些技术文章.</p>
-
-<p>照惯例来个:
-<code>
-Hello World!
-</code></p>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://topplers.github.com/blog/2012/11/22/finecms-17-dot-2-zhu-she-lou-dong/" data-via="" data-counturl="http://topplers.github.com/blog/2012/11/22/finecms-17-dot-2-zhu-she-lou-dong/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/11/20/xiao-tan-php-mvckuang-jia/" title="Previous Post: 小谈PHP之MVC框架">&laquo; 小谈PHP之MVC框架</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     
@@ -468,6 +301,7 @@ Hello World!
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -482,7 +316,10 @@ Hello World!
       var disqus_shortname = 'Yangvivalavida';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://topplers.github.com/blog/2012/11/22/finecms-17-dot-2-zhu-she-lou-dong/';
+        var disqus_url = 'http://topplers.github.com/blog/2012/11/22/finecms-17-dot-2-zhu-she-lou-dong/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
