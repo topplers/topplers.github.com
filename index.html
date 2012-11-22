@@ -95,11 +95,11 @@
   </header>
 
 
-  <div class="entry-content"><h1>简介:</h1>
+  <div class="entry-content"><blockquote><h1>简介:</h1></blockquote>
 
 <h2>FineCMS是一款基于PHP+MySql开发的内容管理系统,采用MVC设计模式，实现业务逻辑与表现层的适当分离，使网页设计师能够轻松设计出理想的模板。</h2>
 
-<h1>漏洞文件:</h1>
+<blockquote><h1>漏洞文件:</h1></blockquote>
 
 <h2>Client.Class.php 29行处:</h2>
 
@@ -167,14 +167,14 @@
 </pre>
 
 
-<h1>漏洞利用:</h1>
+<blockquote><h1>漏洞利用:</h1></blockquote>
 
 <h2>EXP:提交用户注册的时候,伪造一个client_ip,内容如下:</h2>
 
 <p>sb&#8217;,&#8217;1&#8217;,&#8217;6&#8217;),(&#8216;hell&#8217;,&#8217;1b192f49ddec03d0c7e777d3e578cebf&#8217;,(select username from fn_user where userid=1),&#8217;1&#8217;,&#8217;11111&#8217;,&#8217;sbd&#8217;,&#8217;1&#8217;,&#8217;6&#8217;)#
 成功之后,登陆用户:hell,密码:sbdan. 邮箱处就有管理员的user了.</p>
 
-<h1>修补建议:</h1>
+<blockquote><h1>修补建议:</h1></blockquote>
 
 <pre>
 <code>
@@ -234,12 +234,11 @@ function get_user_ip(){
   </header>
 
 
-  <div class="entry-content"><p>I:</p>
+  <div class="entry-content"><blockquote><h1>简介:</h1></blockquote>
 
-<p>什么是MVC?
-MVC (Model View Controller)本来是存在于Desktop程序中的，M是指数据模型，V是指用户界面，C则是控制器。使用MVC的目的是将M和V实现代码分离，从而使同一个程序可以使用不同的表现形式。比如一批统计数据你可以分别用柱状图、饼图来表示。C存在的目的则是确保M和V的同步，一旦M改变，V应该同步更新。</p>
+<p>什么是MVC？        MVC (Model View Controller)本来是存在于Desktop程序中的，M是指数据模型，V是指用户界面，C则是控制器。使用MVC的目的是将M和V实现代码分离，从而使同一个程序可以使用不同的表现形式。比如一批统计数据你可以分别用柱状图、饼图来表示。C存在的目的则是确保M和V的同步，一旦M改变，V应该同步更新。</p>
 
-<p>II：</p>
+<blockquote><h1>分析：</h1></blockquote>
 
 <p>上面的概念可能比较抽象,难以了解,我来简单的讲下:</p>
 
@@ -254,7 +253,7 @@ MVC (Model View Controller)本来是存在于Desktop程序中的，M是指数据
 
 <p><img src="http://farm4.static.flickr.com/3164/3284983140_d803e80c7c_o.gif" alt="Alt text" /></p>
 
-<p>III:</p>
+<blockquote><h1>实例:</h1></blockquote>
 
 <p>下面我用下一段代码,让大家详细了解下MVC框架</p>
 
@@ -426,7 +425,7 @@ Hello World!
     
 <section>
 <h1>Categories</h1>
-<span class='categories_tag'> <a href='/blog/categories/code-nbspaudit' style='font-size: 160.0%'>Code&&nbspaudit(1)</a>  <a href='/blog/categories/php-nbspdevelopment' style='font-size: 160.0%'>Php&nbspdevelopment(1)</a>  <a href='/blog/categories/vida' style='font-size: 160.0%'>Vida(1)</a> </span>
+<span class='categories_tag'> <a href='/blog/categories/code-nbspaudit' style='font-size: 160.0%'>Code&nbspaudit(1)</a>  <a href='/blog/categories/php-nbspdevelopment' style='font-size: 160.0%'>Php&nbspdevelopment(1)</a>  <a href='/blog/categories/vida' style='font-size: 160.0%'>Vida(1)</a> </span>
 </section>
 
 <section>

